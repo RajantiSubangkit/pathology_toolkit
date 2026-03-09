@@ -9,7 +9,7 @@ menu = st.sidebar.radio(
     [
         "10% Neutral Buffered Formalin",
         "Alcohol Dilution",
-        "Antibody Dilution (IHC)",
+        "Immunohistochemistry",
         "PBS Preparation",
         "H&E Staining",
         "Masson Trichrome",
@@ -21,7 +21,14 @@ menu = st.sidebar.radio(
         "Toluidine Blue",
         "Congo Red",
         "Prussian Blue",
-        "Reticulin Stain"
+        "Reticulin Stain",
+        "Alcian Blue",
+        "Oil Red O",
+        "Sudan Black B",
+        "Verhoeff Van Gieson",
+        "Van Gieson",
+        "Luxol Fast Blue",
+        "Warthin Starry"
     ]
 )
 
@@ -76,40 +83,158 @@ elif menu == "Alcohol Dilution":
         st.write("Distilled water:", round(water,2), "mL")
 
 # ===============================
-# Antibody Dilution
+# IHC
 # ===============================
 
-elif menu == "Antibody Dilution (IHC)":
+elif menu == "Immunohistochemistry":
 
-    st.header("IHC Antibody Dilution Calculator")
+    st.header("Immunohistochemistry (IHC)")
 
-    dilution = st.text_input(
-        "Dilution ratio (example 1:200)",
-        key="ab_ratio"
-    )
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "Protocol",
+        "Antibody Dilution",
+        "Blocking Buffer",
+        "Antigen Retrieval Buffer",
+        "DAB Substrate"
+    ])
 
-    volume = st.number_input(
-        "Final volume (µL)",
-        key="ab_volume"
-    )
+# ==============================
+# IHC PROTOCOL
+# ==============================
 
-    if st.button("Calculate Antibody"):
+    with tab1:
 
-        try:
+        st.markdown("""
+### Deparaffinization
+1. Xylene – 2 changes  
+2. Absolute ethanol  
+3. 95% ethanol  
+4. 70% ethanol  
+5. Distilled water  
 
-            ratio = int(dilution.split(":")[1])
+### Antigen Retrieval
+6. Heat in citrate buffer pH 6.0 or Tris-EDTA pH 9.0 (microwave / water bath)
 
-            antibody = volume / ratio
-            diluent = volume - antibody
+### Blocking Endogenous Peroxidase
+7. 3% H₂O₂ – 10 min  
 
-            st.subheader("Results")
+### Blocking Non-specific Binding
+8. Normal serum or BSA blocking buffer – 20 min  
 
-            st.write("Primary antibody:", round(antibody,2), "µL")
-            st.write("Diluent:", round(diluent,2), "µL")
+### Primary Antibody
+9. Incubate primary antibody – 1 hour or overnight  
 
-        except:
+### Secondary Antibody
+10. HRP-conjugated secondary antibody – 30 min  
 
-            st.error("Format must be like 1:200")
+### Chromogen
+11. DAB substrate – 3–10 min  
+
+### Counterstain
+12. Hematoxylin – 1 min  
+
+### Dehydration
+13. Alcohol series  
+14. Xylene  
+
+### Mount
+15. Mounting medium
+""")
+
+# ==============================
+# ANTIBODY DILUTION
+# ==============================
+
+    with tab2:
+
+        st.subheader("Primary Antibody Dilution")
+
+        dilution = st.text_input("Dilution ratio (example 1:200)")
+        volume = st.number_input("Final volume (µL)", key="ihc_ab")
+
+        if st.button("Calculate Antibody"):
+
+            try:
+
+                ratio = int(dilution.split(":")[1])
+
+                antibody = volume / ratio
+                diluent = volume - antibody
+
+                st.write("Primary antibody:", round(antibody,2), "µL")
+                st.write("Antibody diluent:", round(diluent,2), "µL")
+
+            except:
+
+                st.error("Format example: 1:200")
+
+# ==============================
+# BLOCKING BUFFER
+# ==============================
+
+    with tab3:
+
+        st.subheader("Blocking Buffer (1% BSA in PBS)")
+
+        vol = st.number_input("Volume (mL)", key="block")
+
+        if st.button("Calculate Blocking Buffer"):
+
+            bsa = vol * 1 / 100
+
+            st.write("BSA:", round(bsa,2), "g")
+            st.write("PBS:", vol, "mL")
+
+# ==============================
+# ANTIGEN RETRIEVAL BUFFER
+# ==============================
+
+    with tab4:
+
+        st.subheader("Citrate Buffer pH 6.0")
+
+        vol = st.number_input("Volume (mL)", key="citrate")
+
+        if st.button("Calculate Citrate Buffer"):
+
+            citrate = vol * 2.94 / 1000
+
+            st.write("Citric acid:", round(citrate,3), "g")
+            st.write("Distilled water:", vol, "mL")
+            st.write("Adjust pH to 6.0 with NaOH")
+
+
+        st.subheader("Tris-EDTA Buffer pH 9")
+
+        vol2 = st.number_input("Volume (mL)", key="tris")
+
+        if st.button("Calculate Tris Buffer"):
+
+            tris = vol2 * 1.21 / 1000
+            edta = vol2 * 0.37 / 1000
+
+            st.write("Tris base:", round(tris,3), "g")
+            st.write("EDTA:", round(edta,3), "g")
+            st.write("Distilled water:", vol2, "mL")
+
+# ==============================
+# DAB SUBSTRATE
+# ==============================
+
+    with tab5:
+
+        st.subheader("DAB Substrate Solution")
+
+        vol = st.number_input("Volume (mL)", key="dab")
+
+        if st.button("Calculate DAB"):
+
+            dab = vol * 0.5 / 100
+            h2o2 = vol * 0.03 / 100
+
+            st.write("DAB:", round(dab,3), "g")
+            st.write("H₂O₂:", round(h2o2,3), "mL")
+            st.write("Tris buffer:", vol, "mL")
 
 # ===============================
 # PBS Calculator
@@ -883,5 +1008,261 @@ elif menu == "Reticulin Stain":
             st.write("Distilled water:", vol2, "mL")
 
 # ===============================
-# Giemsa staining Protocol
+# AB staining Protocol
 # ===============================
+
+elif menu == "Alcian Blue":
+
+    st.header("Alcian Blue Staining (Acid Mucin)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide
+2. Hydrate to distilled water
+3. Alcian blue solution pH 2.5 – 30 min
+4. Wash in running water
+5. Counterstain nuclear fast red
+6. Dehydrate alcohol
+7. Clear xylene
+8. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Alcian Blue Solution")
+
+        vol = st.number_input("Volume (mL)", key="ab1")
+
+        if st.button("Calculate Alcian Blue"):
+
+            dye = vol * 1 / 100
+
+            st.write("Alcian blue:", round(dye,2), "g")
+            st.write("3% acetic acid:", vol, "mL")
+# ===============================
+# Oil Red O staining Protocol
+# ===============================
+
+elif menu == "Oil Red O":
+
+    st.header("Oil Red O Staining (Lipid)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Frozen section preparation
+2. Fix in formalin
+3. Rinse distilled water
+4. Oil Red O solution – 10–15 min
+5. Rinse 60% isopropanol
+6. Wash distilled water
+7. Counterstain hematoxylin
+8. Mount aqueous medium
+""")
+
+    with tab2:
+
+        st.subheader("Oil Red O Solution")
+
+        vol = st.number_input("Volume (mL)", key="oil1")
+
+        if st.button("Calculate Oil Red O"):
+
+            dye = vol * 0.5 / 100
+
+            st.write("Oil Red O:", round(dye,2), "g")
+            st.write("Isopropanol:", vol, "mL")
+# ===============================
+# Sudan Black staining Protocol
+# ===============================
+
+elif menu == "Sudan Black B":
+
+    st.header("Sudan Black B Staining (Lipid)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Prepare frozen section
+2. Fix with formalin
+3. Stain with Sudan Black B – 10 min
+4. Differentiate in ethanol
+5. Wash water
+6. Counterstain nuclear fast red
+7. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Sudan Black B Solution")
+
+        vol = st.number_input("Volume (mL)", key="sudan1")
+
+        if st.button("Calculate Sudan Black"):
+
+            dye = vol * 0.7 / 100
+
+            st.write("Sudan Black B:", round(dye,2), "g")
+            st.write("70% ethanol:", vol, "mL")
+# ===============================
+# VVG staining Protocol
+# ===============================
+
+elif menu == "Verhoeff Van Gieson":
+
+    st.header("Verhoeff–Van Gieson Stain (Elastic Fibers)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide
+2. Stain with Verhoeff solution
+3. Differentiate in ferric chloride
+4. Sodium thiosulfate rinse
+5. Counterstain Van Gieson solution
+6. Dehydrate alcohol
+7. Clear xylene
+8. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Verhoeff Solution")
+
+        vol = st.number_input("Volume (mL)", key="vvg1")
+
+        if st.button("Calculate Verhoeff"):
+
+            hematox = vol * 5 / 100
+            ferric = vol * 10 / 100
+
+            st.write("Hematoxylin:", round(hematox,2), "g")
+            st.write("Ferric chloride:", round(ferric,2), "g")
+            st.write("Distilled water:", vol, "mL")
+# ===============================
+# VG staining Protocol
+# ===============================
+
+elif menu == "Van Gieson":
+
+    st.header("Van Gieson Staining (Collagen)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide
+2. Hematoxylin nuclear stain
+3. Wash water
+4. Van Gieson solution – 2–5 min
+5. Dehydrate alcohol
+6. Clear xylene
+7. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Van Gieson Solution")
+
+        vol = st.number_input("Volume (mL)", key="vg1")
+
+        if st.button("Calculate Van Gieson"):
+
+            picric = vol * 90 / 100
+            fuchsin = vol * 1 / 100
+
+            st.write("Saturated picric acid:", round(picric,2), "mL")
+            st.write("Acid fuchsin:", round(fuchsin,2), "g")
+# ===============================
+# Luxol staining Protocol
+# ===============================
+
+elif menu == "Luxol Fast Blue":
+
+    st.header("Luxol Fast Blue Staining (Myelin)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide
+2. Stain with Luxol Fast Blue overnight
+3. Differentiate with lithium carbonate
+4. Wash alcohol
+5. Counterstain cresyl violet
+6. Dehydrate alcohol
+7. Clear xylene
+8. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Luxol Fast Blue Solution")
+
+        vol = st.number_input("Volume (mL)", key="lfb1")
+
+        if st.button("Calculate LFB"):
+
+            dye = vol * 0.1 / 100
+
+            st.write("Luxol fast blue:", round(dye,3), "g")
+            st.write("95% ethanol:", vol, "mL")
+# ===============================
+# Warthin Starry staining Protocol
+# ===============================
+
+elif menu == "Warthin Starry":
+
+    st.header("Warthin–Starry Staining (Spirochetes)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide
+2. Silver nitrate impregnation
+3. Developer solution
+4. Wash distilled water
+5. Dehydrate alcohol
+6. Clear xylene
+7. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Silver Nitrate Solution")
+
+        vol = st.number_input("Volume (mL)", key="ws1")
+
+        if st.button("Calculate Silver"):
+
+            silver = vol * 1 / 100
+
+            st.write("Silver nitrate:", round(silver,2), "g")
+            st.write("Distilled water:", vol, "mL")
