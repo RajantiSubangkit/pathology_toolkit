@@ -16,7 +16,12 @@ menu = st.sidebar.radio(
         "PAS Staining",
         "Ziehl-Neelsen",
         "Gram Staining",
-        "Von Kossa"
+        "Von Kossa",
+        "Giemsa Staining",
+        "Toluidine Blue",
+        "Congo Red",
+        "Prussian Blue",
+        "Reticulin Stain"
     ]
 )
 
@@ -660,3 +665,223 @@ elif menu == "Von Kossa":
 
             st.write("Sodium thiosulfate:", round(thio,2), "g")
             st.write("Distilled water:", vol2, "mL")
+# ===============================
+# Giemsa staining Protocol
+# ===============================
+
+elif menu == "Giemsa Staining":
+
+    st.header("Giemsa Staining")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize in xylene  
+2. Hydrate through graded alcohol  
+3. Rinse distilled water  
+4. Stain with Giemsa solution 20–30 min  
+5. Wash with buffer pH 6.8  
+6. Differentiate briefly in acetic acid water  
+7. Dehydrate alcohol  
+8. Clear xylene  
+9. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Giemsa Solution")
+
+        vol = st.number_input("Volume (mL)", key="giemsa1")
+
+        if st.button("Calculate Giemsa"):
+
+            giemsa = vol * 1 / 100
+
+            st.write("Giemsa powder:", round(giemsa,2), "g")
+            st.write("Methanol:", vol, "mL")
+
+# ===============================
+# TB staining Protocol
+# ===============================
+elif menu == "Toluidine Blue":
+
+    st.header("Toluidine Blue Staining")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide  
+2. Hydrate to distilled water  
+3. Toluidine blue solution – 2–5 min  
+4. Wash water  
+5. Dehydrate quickly  
+6. Clear xylene  
+7. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Toluidine Blue Solution")
+
+        vol = st.number_input("Volume (mL)", key="tb1")
+
+        if st.button("Calculate Toluidine Blue"):
+
+            dye = vol * 1 / 100
+
+            st.write("Toluidine blue:", round(dye,2), "g")
+            st.write("Distilled water:", vol, "mL")
+
+# ===============================
+# Congo Red staining Protocol
+# ===============================
+
+elif menu == "Congo Red":
+
+    st.header("Congo Red Staining (Amyloid)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide  
+2. Hydrate to distilled water  
+3. Congo red stain – 20 min  
+4. Differentiate in alkaline alcohol  
+5. Counterstain hematoxylin  
+6. Dehydrate alcohol  
+7. Clear xylene  
+8. Mount
+
+Amyloid shows apple-green birefringence under polarized light
+""")
+
+    with tab2:
+
+        st.subheader("Congo Red Solution")
+
+        vol = st.number_input("Volume (mL)", key="cr1")
+
+        if st.button("Calculate Congo Red"):
+
+            dye = vol * 0.5 / 100
+
+            st.write("Congo red:", round(dye,2), "g")
+            st.write("80% ethanol:", vol, "mL")
+
+# ===============================
+# Prussian Blue staining Protocol
+# ===============================
+
+elif menu == "Prussian Blue":
+
+    st.header("Prussian Blue Staining (Iron)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide  
+2. Hydrate to distilled water  
+3. Mix potassium ferrocyanide + HCl  
+4. Incubate 20–30 min  
+5. Wash distilled water  
+6. Counterstain nuclear fast red  
+7. Dehydrate alcohol  
+8. Clear xylene  
+9. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Potassium Ferrocyanide Solution")
+
+        vol = st.number_input("Volume (mL)", key="pb1")
+
+        if st.button("Calculate Ferrocyanide"):
+
+            salt = vol * 2 / 100
+
+            st.write("Potassium ferrocyanide:", round(salt,2), "g")
+            st.write("Distilled water:", vol, "mL")
+
+
+        st.subheader("Hydrochloric Acid Solution")
+
+        vol2 = st.number_input("Volume (mL)", key="pb2")
+
+        if st.button("Calculate HCl"):
+
+            acid = vol2 * 2 / 100
+
+            st.write("HCl:", round(acid,2), "mL")
+            st.write("Distilled water:", vol2, "mL")
+
+# ===============================
+# Reticulin staining Protocol
+# ===============================
+
+elif menu == "Reticulin Stain":
+
+    st.header("Reticulin Stain (Gomori)")
+
+    tab1, tab2 = st.tabs(["Protocol","Reagent Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+### Protocol
+
+1. Deparaffinize slide  
+2. Oxidize with potassium permanganate  
+3. Bleach with oxalic acid  
+4. Sensitize with iron alum  
+5. Silver impregnation  
+6. Reduce with formalin  
+7. Tone with gold chloride  
+8. Fix with sodium thiosulfate  
+9. Counterstain nuclear fast red
+""")
+
+    with tab2:
+
+        st.subheader("Potassium Permanganate")
+
+        vol = st.number_input("Volume (mL)", key="ret1")
+
+        if st.button("Calculate Permanganate"):
+
+            salt = vol * 1 / 100
+
+            st.write("Potassium permanganate:", round(salt,2), "g")
+            st.write("Distilled water:", vol, "mL")
+
+
+        st.subheader("Oxalic Acid")
+
+        vol2 = st.number_input("Volume (mL)", key="ret2")
+
+        if st.button("Calculate Oxalic Acid"):
+
+            acid = vol2 * 1 / 100
+
+            st.write("Oxalic acid:", round(acid,2), "g")
+            st.write("Distilled water:", vol2, "mL")
+
+# ===============================
+# Giemsa staining Protocol
+# ===============================
