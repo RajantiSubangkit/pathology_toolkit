@@ -1266,3 +1266,14 @@ elif menu == "Warthin Starry":
 
             st.write("Silver nitrate:", round(silver,2), "g")
             st.write("Distilled water:", vol, "mL")
+
+st.sidebar.markdown("---")
+st.sidebar.markdown(
+"""
+**Reference**
+
+Developed by:  
+Soleh, Kasnadi, Subangkit M. (2026)  
+Veterinary Pathology Laboratory Toolkit
+"""
+)
