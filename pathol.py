@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("Bogor Vet. Pathol. Lab Toolkit")
+st.title("Vet. Pathol. Lab Toolkit")
 
 st.sidebar.title("Calculator Menu")
 
