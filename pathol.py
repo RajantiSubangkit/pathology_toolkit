@@ -1,17 +1,17 @@
 import streamlit as st
 
-st.title("Veterinary Pathology Lab Toolkit")
+st.title("Bogor Vet. Pathol. Lab Toolkit")
 
 st.sidebar.title("Calculator Menu")
 
 menu = st.sidebar.selectbox(
     "Choose Tool",
-    (
+    [
         "10% Neutral Buffered Formalin",
         "Alcohol Dilution",
         "Antibody Dilution (IHC)",
         "PBS Preparation"
-    )
+    ]
 )
 
 # ===============================
@@ -22,16 +22,18 @@ if menu == "10% Neutral Buffered Formalin":
 
     st.header("10% Neutral Buffered Formalin Calculator")
 
-    st.write("Composition based on standard NBF recipe")
-
-    volume = st.number_input("Final volume (Liters)", min_value=0.1)
+    volume = st.number_input(
+        "Final volume (Liters)",
+        min_value=0.1,
+        key="nbf_volume"
+    )
 
     if st.button("Calculate NBF"):
 
         formaldehyde = 100 * volume
         NaH2PO4 = 4 * volume
         Na2HPO4 = 6.5 * volume
-        water = (1000 * volume) - (formaldehyde)
+        water = (1000 * volume) - formaldehyde
 
         st.subheader("Required Components")
 
@@ -48,9 +50,9 @@ elif menu == "Alcohol Dilution":
 
     st.header("Alcohol Dilution Calculator")
 
-    C1 = st.number_input("Stock concentration (%)")
-    C2 = st.number_input("Final concentration (%)")
-    V2 = st.number_input("Final volume (mL)")
+    C1 = st.number_input("Stock concentration (%)", key="alc_c1")
+    C2 = st.number_input("Final concentration (%)", key="alc_c2")
+    V2 = st.number_input("Final volume (mL)", key="alc_v2")
 
     if st.button("Calculate Alcohol"):
 
@@ -70,8 +72,15 @@ elif menu == "Antibody Dilution (IHC)":
 
     st.header("IHC Antibody Dilution Calculator")
 
-    dilution = st.text_input("Dilution ratio (example 1:200)")
-    volume = st.number_input("Final volume (µL)")
+    dilution = st.text_input(
+        "Dilution ratio (example 1:200)",
+        key="ab_ratio"
+    )
+
+    volume = st.number_input(
+        "Final volume (µL)",
+        key="ab_volume"
+    )
 
     if st.button("Calculate Antibody"):
 
@@ -99,7 +108,10 @@ elif menu == "PBS Preparation":
 
     st.header("PBS Preparation Calculator")
 
-    volume = st.number_input("Volume (Liters)")
+    volume = st.number_input(
+        "Volume (Liters)",
+        key="pbs_volume"
+    )
 
     if st.button("Calculate PBS"):
 
