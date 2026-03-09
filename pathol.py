@@ -4,7 +4,7 @@ st.title("Bogor Vet. Pathol. Lab Toolkit")
 
 st.sidebar.title("Calculator Menu")
 
-menu = st.sidebar.selectbox(
+menu = st.sidebar.radio(
     "Choose Tool",
     [
         "10% Neutral Buffered Formalin",
