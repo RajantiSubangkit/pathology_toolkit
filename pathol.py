@@ -10,7 +10,10 @@ menu = st.sidebar.radio(
         "10% Neutral Buffered Formalin",
         "Alcohol Dilution",
         "Antibody Dilution (IHC)",
-        "PBS Preparation"
+        "PBS Preparation",
+        "H&E Staining Protocol",
+            "Hematoxylin Recipe",
+            "Eosin Recipe"
     ]
 )
 
@@ -126,3 +129,97 @@ elif menu == "PBS Preparation":
         st.write("KCl:", round(KCl,2), "g")
         st.write("Na2HPO4:", round(Na2HPO4,2), "g")
         st.write("KH2PO4:", round(KH2PO4,2), "g")
+# ===============================
+# H&E staining Protocol
+# ===============================
+
+elif menu == "H&E Staining Protocol":
+
+    st.header("Hematoxylin & Eosin (H&E) Staining Protocol")
+
+    st.markdown("""
+### Deparaffinization
+1. Xylene I – 5 min  
+2. Xylene II – 5 min  
+
+### Rehydration
+3. Absolute ethanol – 3 min  
+4. 95% ethanol – 3 min  
+5. 70% ethanol – 3 min  
+6. Running tap water – 2 min  
+
+### Nuclear Staining
+7. Hematoxylin – 5 min  
+8. Running water – 5 min  
+
+### Differentiation
+9. Acid alcohol – few seconds  
+10. Running water – 1 min  
+
+### Bluing
+11. Scott tap water / ammonia water – 1 min  
+
+### Cytoplasmic Stain
+12. Eosin – 1–2 min  
+
+### Dehydration
+13. 70% ethanol – 1 min  
+14. 95% ethanol – 1 min  
+15. Absolute ethanol – 2 changes  
+
+### Clearing
+16. Xylene – 2 changes  
+
+### Mounting
+17. Mounting medium + coverslip
+""")
+
+# ===============================
+# Haematoxyline Calculator
+# ===============================
+
+elif menu == "Hematoxylin Recipe":
+
+    st.header("Harris Hematoxylin Preparation")
+
+    volume = st.number_input("Final volume (mL)", min_value=100.0)
+
+    if st.button("Calculate Hematoxylin"):
+
+        hematoxylin = 5 * volume / 1000
+        ethanol = 50 * volume / 1000
+        alum = 100 * volume / 1000
+        water = volume
+        mercury = 2.5 * volume / 1000
+        acetic = 40 * volume / 1000
+
+        st.subheader("Required Components")
+
+        st.write("Hematoxylin:", round(hematoxylin,2), "g")
+        st.write("Absolute ethanol:", round(ethanol,2), "mL")
+        st.write("Ammonium/Potassium alum:", round(alum,2), "g")
+        st.write("Distilled water:", round(water,2), "mL")
+        st.write("Mercuric oxide:", round(mercury,2), "g")
+        st.write("Glacial acetic acid:", round(acetic,2), "mL")
+
+# ===============================
+# Eosin Calculator
+# ===============================
+
+elif menu == "Eosin Recipe":
+
+    st.header("Eosin Y Solution")
+
+    volume = st.number_input("Final volume (mL)", min_value=100.0)
+
+    if st.button("Calculate Eosin"):
+
+        eosin = 1 * volume / 100
+        alcohol = volume
+        acetic = 0.5 * volume / 100
+
+        st.subheader("Required Components")
+
+        st.write("Eosin Y:", round(eosin,2), "g")
+        st.write("95% Ethanol:", round(alcohol,2), "mL")
+        st.write("Glacial acetic acid:", round(acetic,2), "mL")
