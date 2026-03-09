@@ -12,6 +12,11 @@ menu = st.sidebar.radio(
         "Antibody Dilution (IHC)",
         "PBS Preparation",
         "H&E Staining",
+        "Masson Trichrome",
+        "PAS Staining",
+        "Ziehl-Neelsen",
+        "Gram Staining",
+        "Von Kossa"
     ]
 )
 
@@ -233,3 +238,248 @@ elif menu == "H&E Staining":
             st.write("Eosin Y:", round(eosin,2), "g")
             st.write("95% Ethanol:", round(alcohol,2), "mL")
             st.write("Glacial acetic acid:", round(acetic,2), "mL")
+
+# ===============================
+# MT staining Protocol
+# ===============================
+
+elif menu == "Masson Trichrome":
+
+    st.header("Masson Trichrome Staining")
+
+    tab1, tab2 = st.tabs(["Protocol", "Recipes"])
+
+    with tab1:
+
+        st.subheader("Masson Trichrome Protocol")
+
+        st.markdown("""
+1. Deparaffinize in xylene  
+2. Rehydrate through graded alcohol  
+3. Bouin's solution – 1 hour at 56°C  
+4. Wash in running water  
+5. Weigert iron hematoxylin – 10 min  
+6. Biebrich scarlet-acid fuchsin – 10 min  
+7. Phosphomolybdic / phosphotungstic acid – 10 min  
+8. Aniline blue – 5 min  
+9. 1% acetic acid – 2 min  
+10. Dehydrate in ethanol  
+11. Clear in xylene  
+12. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Biebrich Scarlet Solution")
+
+        vol = st.number_input("Volume (mL)", key="masson1")
+
+        if st.button("Calculate Biebrich Scarlet"):
+
+            scarlet = 0.9 * vol / 100
+            fuchsin = 0.1 * vol / 100
+
+            st.write("Biebrich scarlet:", round(scarlet,2), "g")
+            st.write("Acid fuchsin:", round(fuchsin,2), "g")
+            st.write("Distilled water:", vol, "mL")
+
+        st.subheader("Aniline Blue")
+
+        vol2 = st.number_input("Volume (mL)", key="masson2")
+
+        if st.button("Calculate Aniline Blue"):
+
+            aniline = 2.5 * vol2 / 100
+
+            st.write("Aniline blue:", round(aniline,2), "g")
+            st.write("Distilled water:", vol2, "mL")
+
+# ===============================
+# PAS staining Protocol
+# ===============================
+
+elif menu == "PAS Staining":
+
+    st.header("PAS Staining")
+
+    tab1, tab2 = st.tabs(["Protocol", "Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+1. Deparaffinize and hydrate  
+2. Periodic acid – 5–10 min  
+3. Rinse distilled water  
+4. Schiff reagent – 15 min  
+5. Running water – 5 min  
+6. Counterstain hematoxylin  
+7. Dehydrate alcohol  
+8. Xylene  
+9. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Periodic Acid Solution")
+
+        vol = st.number_input("Volume (mL)", key="pas1")
+
+        if st.button("Calculate Periodic Acid"):
+
+            acid = 1 * vol / 100
+
+            st.write("Periodic acid:", round(acid,2), "g")
+            st.write("Distilled water:", vol, "mL")
+
+        st.subheader("Schiff Reagent")
+
+        vol2 = st.number_input("Volume (mL)", key="pas2")
+
+        if st.button("Calculate Schiff"):
+
+            basic_fuchsin = 0.5 * vol2 / 100
+
+            st.write("Basic fuchsin:", round(basic_fuchsin,2), "g")
+            st.write("Distilled water:", vol2, "mL")
+
+# ===============================
+# ZN staining Protocol
+# ===============================
+
+elif menu == "Ziehl-Neelsen":
+
+    st.header("Ziehl-Neelsen Staining")
+
+    tab1, tab2 = st.tabs(["Protocol", "Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+1. Deparaffinize slide  
+2. Flood with carbol fuchsin  
+3. Heat gently until steaming  
+4. Wash with water  
+5. Decolorize with acid alcohol  
+6. Wash water  
+7. Counterstain methylene blue  
+8. Wash and dry
+""")
+
+    with tab2:
+
+        st.subheader("Carbol Fuchsin")
+
+        vol = st.number_input("Volume (mL)", key="zn1")
+
+        if st.button("Calculate Carbol Fuchsin"):
+
+            fuchsin = 1 * vol / 100
+            phenol = 5 * vol / 100
+
+            st.write("Basic fuchsin:", round(fuchsin,2), "g")
+            st.write("Phenol:", round(phenol,2), "g")
+            st.write("Distilled water:", vol, "mL")
+
+        st.subheader("Acid Alcohol")
+
+        vol2 = st.number_input("Volume (mL)", key="zn2")
+
+        if st.button("Calculate Acid Alcohol"):
+
+            hcl = 1 * vol2 / 100
+            ethanol = vol2
+
+            st.write("HCl:", round(hcl,2), "mL")
+            st.write("70% ethanol:", ethanol, "mL")
+
+# ===============================
+# Gram staining Protocol
+# ===============================
+
+elif menu == "Gram Staining":
+
+    st.header("Gram Staining")
+
+    tab1, tab2 = st.tabs(["Protocol", "Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+1. Crystal violet – 1 min  
+2. Wash water  
+3. Gram iodine – 1 min  
+4. Decolorize alcohol  
+5. Safranin – 30 sec  
+6. Wash and dry
+""")
+
+    with tab2:
+
+        st.subheader("Crystal Violet")
+
+        vol = st.number_input("Volume (mL)", key="gram1")
+
+        if st.button("Calculate Crystal Violet"):
+
+            dye = 2 * vol / 100
+
+            st.write("Crystal violet:", round(dye,2), "g")
+            st.write("Distilled water:", vol, "mL")
+
+        st.subheader("Safranin")
+
+        vol2 = st.number_input("Volume (mL)", key="gram2")
+
+        if st.button("Calculate Safranin"):
+
+            dye = 0.5 * vol2 / 100
+
+            st.write("Safranin:", round(dye,2), "g")
+            st.write("Distilled water:", vol2, "mL")
+
+# ===============================
+# Gram staining Protocol
+# ===============================
+
+elif menu == "Von Kossa":
+
+    st.header("Von Kossa Staining")
+
+    tab1, tab2 = st.tabs(["Protocol", "Recipes"])
+
+    with tab1:
+
+        st.markdown("""
+1. Deparaffinize  
+2. Silver nitrate – 30–60 min under light  
+3. Wash water  
+4. Sodium thiosulfate – 5 min  
+5. Counterstain nuclear fast red  
+6. Dehydrate alcohol  
+7. Clear xylene  
+8. Mount
+""")
+
+    with tab2:
+
+        st.subheader("Silver Nitrate")
+
+        vol = st.number_input("Volume (mL)", key="vk1")
+
+        if st.button("Calculate Silver Nitrate"):
+
+            silver = 5 * vol / 100
+
+            st.write("Silver nitrate:", round(silver,2), "g")
+            st.write("Distilled water:", vol, "mL")
+
+        st.subheader("Sodium Thiosulfate")
+
+        vol2 = st.number_input("Volume (mL)", key="vk2")
+
+        if st.button("Calculate Thiosulfate"):
+
+            thio = 5 * vol2 / 100
+
+            st.write("Sodium thiosulfate:", round(thio,2), "g")
+            st.write("Distilled water:", vol2, "mL")
